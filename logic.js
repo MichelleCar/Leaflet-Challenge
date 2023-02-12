@@ -2,6 +2,9 @@
 var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 var tectonicplates = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json"
 
+// --------------------------------------------------------------------------------
+// PART 1: Create the earthquake vizualization
+// --------------------------------------------------------------------------------
 
 // Perform a GET request to the query URL
 d3.json(queryUrl).then(function (data) {
@@ -88,6 +91,10 @@ function createMap(earthquakes) {
     access_token: 'pk.eyJ1IjoibWljaGVsbGVjYXJ2YWxobyIsImEiOiJjbGUwbXBxYzMxY3RzM3ZueTN6ZnRicGJxIn0.rtETj8AmHXnbIsQ-RguXFA'
   });
 
+  // --------------------------------------------------------------------------------
+  // PART 2: Add tectonic plate data to our earthquake visualization
+  // --------------------------------------------------------------------------------
+  
   // Create a new layer on our map to show the earth's tectonic plates relative to earthquake activity
   faultlines = new L.layerGroup();
 
