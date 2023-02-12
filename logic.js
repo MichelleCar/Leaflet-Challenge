@@ -25,7 +25,7 @@ function markerColour(depth){
   else return "#FF0000";
 }
 
-// Function to create earthquake map
+// Function to create earthquake map (the basis of our map)
 function createFeatures(earthquakeData) {
 
   // Define a function that we want to run once for each feature in the GEOJSON file.
@@ -39,10 +39,11 @@ function createFeatures(earthquakeData) {
   var earthquakes = L.geoJSON(earthquakeData, {
     onEachFeature: onEachFeature,
 
-    // Point to layer used to alter markers
+    // Point to layer used to alter markers (https://leafletjs.com/examples/geojson/)
     pointToLayer: function(feature, latlng) {
 
       // Determine the style of markers based on earthquake magnitude ("mag")
+      // https://leafletjs.com/reference.html#circlemarker
       var markers = {
         radius: markerSize(feature.properties.mag),
         fillColor: markerColour(feature.geometry.coordinates[2]),
@@ -87,14 +88,13 @@ function createMap(earthquakes) {
     access_token: 'pk.eyJ1IjoibWljaGVsbGVjYXJ2YWxobyIsImEiOiJjbGUwbXBxYzMxY3RzM3ZueTN6ZnRicGJxIn0.rtETj8AmHXnbIsQ-RguXFA'
   });
 
-  // Create layer for tectonic plates
+  // Create a new layer on our map to show the earth's tectonic plates relative to earthquake activity
   faultlines = new L.layerGroup();
 
-  // Perform a GET request to the tectonicplatesURL
+  // Perform a GET request to the tectonicplates JSON data set
   d3.json(tectonicplates).then(function (plates) {
 
-      // Console log the data retrieved 
-      console.log(plates);
+      // Format and add the faultlines layer to our map 
       L.geoJSON(plates, {
           color: "red",
           weight: 2
@@ -114,14 +114,14 @@ function createMap(earthquakes) {
       "Tectonic Plates": faultlines
     };  
 
-  // Create our map, giving it the style map and earthquakes layers to display
+  // Create our map, specifying the layers to display
   var myMap = L.map("map", {
     center: [37.09, -95.71],
     zoom: 5,
-    layers: [earthquakes, grayscale, satellite, faultlines]
+    layers: [earthquakes, grayscale, satellite, outdoors, faultlines]
   });
 
-  // Add legend to bottom right corner of the map
+  // Add a legend to the bottom right corner of the map
   // THANK YOU: https://www.igismap.com/legend-in-leafletjs-map-with-topojson/ 
   var legend = L.control({position: "bottomright"});
   legend.onAdd = function(map) {
@@ -143,7 +143,7 @@ function createMap(earthquakes) {
   };
   
   // Adds Legend to myMap
-  // Additional layout coded into CSS Style file (style.css)
+  // Additional layout, including box and white background coded into CSS Style file (style.css)
   legend.addTo(myMap)
 
   // Create the layer toggle control
