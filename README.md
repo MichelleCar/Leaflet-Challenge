@@ -27,12 +27,23 @@ Some features include:
     * GeoJSON
 * Augment map features using chosen plugins from leaflet plugins repository
 
+### Earthquake Vizualization - Case Study
+
+#### Part 1: Create the Earthquake Visualization
+* Using the USGS earthquake data, I chose the "All Earthquakes from the Past 7 Days" data set. 
+* I used the URL of the JSON data to pull in the data for the visualization. 
+* Using Leaflet, I created a map that plots all the earthquakes from the dataset based on their longitude and latitude.
+* I created data markers that reflect the magnitude of the earthquake by their size and the depth of the earthquake by a defined colour scale. Earthquakes with higher magnitudes appear larger, and earthquakes with greater depth appear darker in colour.
+* I included popups that provide additional information about the earthquake when its associated marker is clicked.
+* Then I created a legend that will provide context for your map data.
 
 
+#### Part 2: Add Tectonic Plate Data to the Map
+* I plotted a second dataset on the map to illustrate the relationship between tectonic plates and seismic activity. I pulled in this dataset from https://github.com/fraxen/tectonicplatesand visualized it alongside the original data.
+* I added additional base maps to choose from, including a satellite and outdoors views.
+* I put each dataset into separate overlays that can be toggled on and off independently.
+* Finally, I added layer/toggle controls to your map to allow the user to interact and customize the view options.
 
 
-
-
-
-Live project output: https://michellecar.github.io/Leaflet-Challenge/
+**Live project output**: https://michellecar.github.io/Leaflet-Challenge/
 
