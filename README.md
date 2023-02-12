@@ -14,7 +14,7 @@ Leaflet is one of the most popular open-source JavaScript libraries for interact
 
 Advanced functionality is still available through Leaflet plugins. 
 
-It’s used by websites ranging from The New York Times and The Washington Post to GitHub and Flickr, as well as GIS specialists like OpenStreetMap, Mapbox, and CartoDB. The San Francisco Chronicle, for example, did a project called the California Fire tracker (https://www.smashingmagazine.com/2020/02/javascript-maps-react-leaflet/#:~:text=California%20Fire%20tracker)  — an interactive map that provides information on wildfires burning across California, using Leaflet. Not only did they pinpoint the origin of the fire, but they also showed us the trajectory of it.
+It’s used by websites ranging from The New York Times and The Washington Post to GitHub and Flickr, as well as GIS specialists like OpenStreetMap, Mapbox, and CartoDB. The San Francisco Chronicle, for example, did a project called the California Fire tracker [California Fire tracker](#https://www.sfchronicle.com/projects/california-fire-map/)   — an interactive map that provides information on wildfires burning across California, using Leaflet. Not only did they pinpoint the origin of the fire, but they also showed us the trajectory of it.
 
 Some features include:
 * Interactive panning/zooming
