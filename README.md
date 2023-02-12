@@ -42,7 +42,7 @@ Some features include:
 * I plotted a second dataset on the map to illustrate the relationship between tectonic plates and seismic activity. I pulled in this dataset from https://github.com/fraxen/tectonicplatesand visualized it alongside the original data.
 * I added additional base maps to choose from, including a satellite and outdoors views.
 * I put each dataset into separate overlays that can be toggled on and off independently.
-* Finally, I added layer/toggle controls to your map to allow the user to interact and customize the view options.
+* Finally, I added layer/toggle controls to the map to allow the user to interact and customize the view options.
 
 #
 **Live project output**: https://michellecar.github.io/Leaflet-Challenge/
