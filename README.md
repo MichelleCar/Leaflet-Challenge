@@ -35,7 +35,7 @@ Some features include:
 * Using Leaflet, I created a map that plots all the earthquakes from the dataset based on their longitude and latitude.
 * I created data markers that reflect the magnitude of the earthquake by their size and the depth of the earthquake by a defined colour scale. Earthquakes with higher magnitudes appear larger, and earthquakes with greater depth appear darker in colour.
 * I included popups that provide additional information about the earthquake when its associated marker is clicked.
-* Then I created a legend that will provide context for your map data.
+* Then I created a legend that will provide context for the map data.
 
 
 #### Part 2: Add Tectonic Plate Data to the Map
