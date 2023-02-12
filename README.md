@@ -8,7 +8,13 @@ The USGS is interested in building a new set of tools that will allow them to vi
 ##
 
 ### Why Leaflet JS is the best tool for the task?
-Leaflet is one of the most popular open-source JavaScript libraries for interactive maps. It’s used by websites ranging from The New York Times and The Washington Post to GitHub and Flickr, as well as GIS specialists like OpenStreetMap, Mapbox, and CartoDB.
+Leaflet is one of the most popular open-source JavaScript libraries for interactive maps. For these reasons, Leaflet is probably the most popular open-source web-mapping library at the moment. As the Leaflet home page puts it, the guiding principle behind this library is simplicity:
+
+“Leaflet doesn’t try to do everything for everyone. Instead it focuses on making the basic things work perfectly.”
+
+Advanced functionality is still available through Leaflet plugins. 
+
+It’s used by websites ranging from The New York Times and The Washington Post to GitHub and Flickr, as well as GIS specialists like OpenStreetMap, Mapbox, and CartoDB. The San Francisco Chronicle, for example, did a project called the California Fire tracker (https://www.smashingmagazine.com/2020/02/javascript-maps-react-leaflet/#:~:text=California%20Fire%20tracker)  — an interactive map that provides information on wildfires burning across California, using Leaflet. Not only did they pinpoint the origin of the fire, but they also showed us the trajectory of it.
 
 Some features include:
 * Interactive panning/zooming
@@ -20,6 +26,11 @@ Some features include:
     * Popups
     * GeoJSON
 * Augment map features using chosen plugins from leaflet plugins repository
+
+
+
+
+
 
 
 
