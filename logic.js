@@ -1,20 +1,21 @@
-// Store our API endpoint as queryUrl.
+// Store our API endpoint as "queryUrl" and tectonic plate data as "tectonicplates".
 var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 var tectonicplates = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json"
 
 
 // Perform a GET request to the query URL
 d3.json(queryUrl).then(function (data) {
-  // Once we get a response, send the data.features object to the createFeatures function.
+  // Send the data.features object to the createFeatures function.
   createFeatures(data.features);
 });
 
-// Function to determine marker size
+// Create function to determine marker size
 function markerSize(magnitude) {
+  // Increase the scale/size of the magnitude marker to make it more readable on a map when zoomed out
   return magnitude * 10000;
 };
 
-// Function to determine marker color by depth
+// Function to define marker color by depth
 function markerColour(depth){
   if (depth < 10) return "#00FF00";
   else if (depth < 30) return "greenyellow";
@@ -24,9 +25,10 @@ function markerColour(depth){
   else return "#FF0000";
 }
 
+// Function to create earthquake map
 function createFeatures(earthquakeData) {
 
-  // Define a function that we want to run once for each feature in the features array.
+  // Define a function that we want to run once for each feature in the GEOJSON file.
   // Give each feature a popup that describes the place and time of the earthquake.
   function onEachFeature(feature, layer) {
     layer.bindPopup(`<h3>Location: ${feature.properties.place}</h3><hr><p>Date: ${new Date(feature.properties.time)}</p><p>Magnitude: ${feature.properties.mag}</p><p>Depth: ${feature.geometry.coordinates[2]}</p>`);
@@ -40,11 +42,11 @@ function createFeatures(earthquakeData) {
     // Point to layer used to alter markers
     pointToLayer: function(feature, latlng) {
 
-      // Determine the style of markers based on properties
+      // Determine the style of markers based on earthquake magnitude ("mag")
       var markers = {
         radius: markerSize(feature.properties.mag),
         fillColor: markerColour(feature.geometry.coordinates[2]),
-        fillOpacity: 0.5,
+        fillOpacity: 0.4,
         color: "black",
         stroke: true,
         weight: 0.5
@@ -53,13 +55,15 @@ function createFeatures(earthquakeData) {
     }
   });
 
-  // Send our earthquakes layer to the createMap function/
+  // Send our earthquakes layer to the createMap function
   createMap(earthquakes);
 }
 
+// Create the base map & overlay maps
 function createMap(earthquakes) {
 
   // Create tile layer using MapBox and OpenStreet Map (as shown in the attribute of the sample image)
+  // Grayscale base map
   var grayscale = L.tileLayer('https://api.mapbox.com/styles/v1/{style}/tiles/{z}/{x}/{y}?access_token={access_token}', {
     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
     tileSize: 512,
@@ -69,12 +73,14 @@ function createMap(earthquakes) {
     access_token: 'pk.eyJ1IjoibWljaGVsbGVjYXJ2YWxobyIsImEiOiJjbGUwbXBxYzMxY3RzM3ZueTN6ZnRicGJxIn0.rtETj8AmHXnbIsQ-RguXFA'
   });
 
+  // Satellite base map
   var satellite = L.tileLayer('https://api.mapbox.com/styles/v1/{style}/tiles/{z}/{x}/{y}?access_token={access_token}', {
     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
     style:'mapbox/satellite-streets-v12',
     access_token: 'pk.eyJ1IjoibWljaGVsbGVjYXJ2YWxobyIsImEiOiJjbGUwbXBxYzMxY3RzM3ZueTN6ZnRicGJxIn0.rtETj8AmHXnbIsQ-RguXFA'
   });
 
+  // Outdoors base map
   var outdoors = L.tileLayer('https://api.mapbox.com/styles/v1/{style}/tiles/{z}/{x}/{y}?access_token={access_token}', {
     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
     style:'mapbox/outdoors-v12',
@@ -115,31 +121,34 @@ function createMap(earthquakes) {
     layers: [earthquakes, grayscale, satellite, faultlines]
   });
 
-  // Add legend on Bottom Right Corner
+  // Add legend to bottom right corner of the map
+  // THANK YOU: https://www.igismap.com/legend-in-leafletjs-map-with-topojson/ 
   var legend = L.control({position: "bottomright"});
   legend.onAdd = function(map) {
-    //Dom Utility that puts legend into DIV & Info Legend
+    // Dom Utility that puts legend into DIV & Info Legend
     var div = L.DomUtil.create("div", "info legend"),
-    //Depth steps
+    // Define depth steps
     depth = [-10, 10, 30, 50, 70, 90];
 
-    //Legend Label "Depth"  
-    // https://www.igismap.com/legend-in-leafletjs-map-with-topojson/ 
+    // Legend Label "Depth"  
     div.innerHTML = 'Depth<br><hr>'
 
+    // Loop through each depth step to create bins for the legend
     for (var i = 0; i < depth.length; i++) {
       div.innerHTML +=
-      //HTML code with nbs(non-breaking space) and ndash
+      // HTML code with nbs(non-breaking space) and ndash
       '<i style="background:' + markerColour(depth[i] + 1) + '"></i> ' + depth[i] + (depth[i + 1] ? '&ndash;' + depth[i + 1] + '<br>' : '+');
     }
     return div;
   };
-  //Adds Legend to myMap
+  
+  // Adds Legend to myMap
+  // Additional layout coded into CSS Style file (style.css)
   legend.addTo(myMap)
 
-  // Create a layer control.
-  // Pass it our baseMaps and overlayMaps.
-  // Add the layer control to the map.
+  // Create the layer toggle control
+  // Pass in our baseMaps and overlayMaps
+  // Add the layer toggle control to the map
   L.control.layers(baseMaps, overlayMaps, {
     collapsed: false
   }).addTo(myMap);
