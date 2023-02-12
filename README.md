@@ -44,6 +44,6 @@ Some features include:
 * I put each dataset into separate overlays that can be toggled on and off independently.
 * Finally, I added layer/toggle controls to your map to allow the user to interact and customize the view options.
 
-
+#
 **Live project output**: https://michellecar.github.io/Leaflet-Challenge/
-
+![Leaflet](https://user-images.githubusercontent.com/115101031/218343163-57319301-0ceb-41f0-b118-a75cff827a73.gif)
